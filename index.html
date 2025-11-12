@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الدراسة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* خط عربي مناسب، يمكن تغييره إلى خط آخر مثل 'Tahoma' إذا أردت */
+            direction: rtl;
+            text-align: right;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #4CAF50; /* لون أخضر للعناوين */
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* لون بديل للصفوف */
+        }
+        tr:hover {
+            background-color: #ddd; /* تأثير عند التمرير */
+        }
+        .separator {
+            background-color: #e0e0e0; /* لون رمادي فاتح للفاصل */
+            font-weight: bold;
+            text-align: center;
+        }
+        .footer {
+            background-color: #4CAF50; /* لون أخضر للشريط */
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>📘 جدول الدراسة</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>اليوم</th>
+                <th>التاريخ</th>
+                <th>المهام</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- الجزء الأول: من 12 إلى 18 نوفمبر -->
+            <tr>
+                <td>الأربعاء</td>
+                <td>12 نوفمبر</td>
+                <td><strong>مرئية 2</strong> (عرض البيانات)</td>
+            </tr>
+            <tr>
+                <td>الخميس</td>
+                <td>13 نوفمبر</td>
+                <td><strong>مرئية 2</strong> (إضافة - حذف - تعديل)</td>
+            </tr>
+            <tr>
+                <td>الجمعة</td>
+                <td>14 نوفمبر</td>
+                <td><strong>مرئية 2</strong> (DGV إضافة - حذف - تعديل)</td>
+            </tr>
+            <tr>
+                <td>السبت</td>
+                <td>15 نوفمبر</td>
+                <td><strong>تراكيب بيانات 2</strong> (selection_sort - Bubble_Sort - Insertion_Sort)</td>
+            </tr>
+            <tr>
+                <td>الأحد</td>
+                <td>16 نوفمبر</td>
+                <td><strong>تراكيب بيانات 2</strong> (Merge_Sort - Quick_Sort - Radix_Sort)</td>
+            </tr>
+            <tr>
+                <td>الإثنين</td>
+                <td>17 نوفمبر</td>
+                <td><strong>تراكيب بيانات 2</strong> (Binary Search - حل أسئلة سنوات)</td>
+            </tr>
+            <tr>
+                <td>الثلاثاء</td>
+                <td>18 نوفمبر</td>
+                <td><strong>تراكيب بيانات 2</strong> (حل أسئلة سنوات)</td>
+            </tr>
+            <!-- فاصل بين القسمين -->
+            <tr class="separator">
+                <td colspan="3">🎯 بعد الامتحان تراكيب بيانات 2         </td>
+            </tr>
+            <!-- الجزء الثاني: من 19 إلى 24 نوفمبر -->
+            <tr>
+                <td>الأربعاء</td>
+                <td>19 نوفمبر</td>
+                <td>امتحان <strong>تراكيب بيانات 2 + معالجة صور (مقرر النظري)</strong></td>
+            </tr>
+            <tr>
+                <td>الخميس</td>
+                <td>20 نوفمبر</td>
+                <td><strong>برمجة نظم + معالجة صور عملي</strong></td>
+            </tr>
+            <tr>
+                <td>الجمعة</td>
+                <td>21 نوفمبر</td>
+                <td><strong>برمجة نظم + دلفي</strong></td>
+            </tr>
+            <tr>
+                <td>السبت</td>
+                <td>22 نوفمبر</td>
+                <td><strong>مراجعة مرئية 2 + معالجة صور</strong></td>
+            </tr>
+            <tr>
+                <td>الأحد</td>
+                <td>23 نوفمبر</td>
+                <td>امتحان <strong>مرئية 2</strong> + <strong>معالجة صور</strong></td>
+            </tr>
+            <tr>
+                <td>الإثنين</td>
+                <td>24 نوفمبر</td>
+                <td>امتحان <strong>برمجة نظم</strong> + تسليم <strong>دلفي المشروع والتوثيق</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        اي تعديلات في الجدول حيتم تحديثها تلقائيا في الموقع
+    </div>
+</body>
+</html>
