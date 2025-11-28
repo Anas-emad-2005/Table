@@ -19,7 +19,7 @@
 
 /* Reset خفيف */
 * { box-sizing: border-box; }
-html,body { height:100%; }
+html,body { height:100%; overflow-x:hidden; }
 body{
   margin:0;
   color:var(--text);
@@ -287,7 +287,6 @@ input:focus{ box-shadow: 0 8px 24px rgba(55,91,210,0.06); transform: translateY(
 .timeline-table{
   width:100%;
   border-collapse:collapse;
-  min-width:720px;
 }
 .timeline-table thead th{
   text-align:right;
@@ -308,16 +307,89 @@ input:focus{ box-shadow: 0 8px 24px rgba(55,91,210,0.06); transform: translateY(
   color:var(--text);
 }
 
-/* تجاوب: على الشاشات الصغيرة نحول الجدول إلى بطاقة عمودية مبسطة */
-@media (max-width:720px){
-  .timeline-table{ min-width:0; border:0; display:block; }
-  .timeline-table thead{ display:none; }
-  .timeline-table tbody{ display:flex; flex-direction:column; gap:10px; padding:10px; }
-  .timeline-table tbody tr{
-    display:block; background:transparent; border-radius:10px; padding:12px; border:1px solid rgba(9,30,66,0.03);
+/* تجاوب: على الشاشات الصغيرة نحول الجداول إلى بطاقات عمودية مبسطة */
+@media (max-width:768px){
+  .timeline-table-wrap, #leaderboard-wrap {
+    overflow-x: visible; /* No scroll on wrapper */
   }
-  .timeline-table tbody td{ display:block; padding:8px 10px; border-bottom:0; }
-  .timeline-table tbody td:first-child{ font-weight:700; color:var(--text); }
+
+  /* Hide table headers */
+  .timeline-table thead,
+  #leaderboard thead {
+    display:none;
+  }
+
+  /* Display table elements as blocks */
+  .timeline-table, .timeline-table tbody, .timeline-table tr,
+  #leaderboard, #leaderboard tbody, #leaderboard tr {
+    display: block;
+    width: 100%;
+  }
+
+  /* Style rows as cards */
+  .timeline-table tbody tr,
+  #leaderboard tbody tr {
+    display: block;
+    background: transparent;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(9, 30, 66, 0.05);
+  }
+
+  /* Display cells as blocks and add labels */
+  .timeline-table tbody td,
+  #leaderboard tbody td {
+    display: block;
+    padding: 8px 0;
+    border: 0;
+    text-align: right;
+    position: relative;
+    padding-left: 100px; /* Space for the label */
+  }
+
+  .timeline-table tbody td:before,
+  #leaderboard tbody td:before {
+    position: absolute;
+    left: 8px;
+    width: 90px;
+    text-align: left;
+    font-weight: bold;
+    color: var(--text);
+    content: attr(data-label);
+  }
+
+  /* Timeline Table Labels */
+  .timeline-table tbody td:nth-of-type(1)::before { content: 'اليوم'; }
+  .timeline-table tbody td:nth-of-type(2)::before { content: 'الوصف'; }
+  .timeline-table tbody td:nth-of-type(3)::before { content: 'تفاصيل'; }
+
+  /* Leaderboard Table Labels */
+  #leaderboard tbody td:nth-of-type(1)::before { content: 'المركز'; }
+  #leaderboard tbody td:nth-of-type(2)::before { content: 'إسم الفريق'; }
+  #leaderboard tbody td:nth-of-type(3)::before { content: 'النقاط'; }
+
+
+  /* Reset special styling for first-child and hover effects */
+  .timeline-table tbody td:first-child,
+  #leaderboard tbody td {
+    font-weight: normal;
+    color: var(--muted);
+  }
+
+  .timeline-table tbody tr:hover td,
+  #leaderboard tbody tr:hover td {
+    background: transparent;
+    color: var(--muted);
+  }
+  #leaderboard tbody tr:nth-child(1) td,
+  #leaderboard tbody tr:nth-child(2) td,
+  #leaderboard tbody tr:nth-child(3) td {
+      color: var(--muted); /* Reset special colors for top 3 on mobile card view */
+  }
+  #leaderboard tbody tr:nth-child(1) { border-color: var(--accent-1); }
+  #leaderboard tbody tr:nth-child(2) { border-color: var(--accent-2); }
+  #leaderboard tbody tr:nth-child(3) { border-color: var(--warm); }
 }
 
 /* ========== Organizers grid ========== */
@@ -388,36 +460,29 @@ input:focus{ box-shadow: 0 8px 24px rgba(55,91,210,0.06); transform: translateY(
   .container{ padding: 0 14px; }
 }
 
-/* full-bleed hero - يجعل القسم يعرض بعرض الصفحة مع محتوى محدود العرض */
+/* Hero: full-bleed, larger, centered */
 .hero.full-bleed{
-  width:100vw;
-  position:relative;
-  left:50%;
-  right:50%;
-  margin-left:-50vw;
-  margin-right:-50vw;
-  padding:48px 18px;
-  background: linear-gradient(90deg, rgba(55,91,210,0.04), rgba(6,182,212,0.02));
-  box-shadow: 0 8px 30px rgba(8,18,32,0.04);
+  padding: 80px 18px;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(800px 300px at 10% 10%, rgba(124,58,237,0.06), transparent 8%),
+    linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,255,0.6));
+  box-shadow: 0 12px 40px rgba(11,32,54,0.04);
 }
 .hero.full-bleed .hero-card{
-  max-width: var(--max-width);
-  background: transparent;
-  border: none;
-  padding: 0;
+  max-width:1100px;
+  margin:0 auto;
+  background:transparent;
+  border:0;
+  padding:0;
+  box-shadow:none;
 }
-.hero .lead{ color:var(--text); opacity:0.95; }
+.hero-card .row{ align-items:center; gap:24px; }
 
-/* إزالة عناصر المدّة والجوائز إذا بقيت */
-.hero-quick, .hero-side, .visual-card, .visual-illustration { display:none !important; }
-
-/* تحسين مظهر الأزرار Bootstrap مع ثيمنا */
-.btn-primary{ background: linear-gradient(90deg,var(--accent),var(--accent-2)); border:0; box-shadow: 0 8px 24px rgba(55,91,210,0.12); }
-.btn-warning{ background: linear-gradient(90deg,var(--accent-3),#ffcd7a); border:0; color:#1a1200; }
-
-/* ضبط الهوامش عرض الصفحة */
 @media (max-width:980px){
-  .hero.full-bleed{ padding:32px 14px; }
+  .hero.full-bleed{ padding:32px 14px; min-height: auto; }
 }
 
 /* البطاقة الجانبية والإحصاءات */
@@ -695,10 +760,6 @@ footer.site-footer{ margin-top:32px; padding:18px; background: transparent; colo
 #leaderboard tbody tr:nth-child(2) td { color:var(--accent-2); }
 #leaderboard tbody tr:nth-child(3) td { color:var(--warm); }
 
-@media (max-width:720px){
-  #leaderboard thead { display:none; }
-  #leaderboard tbody tr { display:block; border:1px solid rgba(11,32,54,0.03); margin-bottom:8px; border-radius:8px; padding:8px; }
-  #leaderboard tbody td { display:block; text-align:right; padding:6px 8px; border-top:0; }
-}
+
 
 /* End of moved styles */
