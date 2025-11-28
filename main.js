@@ -236,3 +236,105 @@ document.addEventListener('DOMContentLoaded', () => {
 
   tryNext();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Responsive nav (manages aria-expanded / aria-hidden)
+  (function(){
+    var nav = document.getElementById('topnav');
+    var toggle = document.getElementById('nav-toggle');
+    var menu = document.getElementById('topnav-menu');
+    if (!nav || !toggle || !menu) return;
+
+    function setOpen(open){
+      if (open){
+        nav.classList.add('open');
+        toggle.setAttribute('aria-expanded','true');
+        menu.setAttribute('aria-hidden','false');
+      } else {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+        menu.setAttribute('aria-hidden','true');
+      }
+    }
+
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      setOpen(!nav.classList.contains('open'));
+    });
+
+    // close when clicking a link inside menu
+    menu.addEventListener('click', function(e){
+      var target = e.target;
+      if (target.tagName.toLowerCase() === 'a' || target.classList.contains('cta-btn')){
+        setOpen(false);
+      }
+    });
+
+    // close menu when clicking outside
+    document.addEventListener('click', function(e){
+      if (!nav.contains(e.target)) setOpen(false);
+    });
+
+    // close on Escape
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    // ensure menu state resets on resize (desktop breakpoint)
+    window.addEventListener('resize', function(){
+      if (window.innerWidth > 992) setOpen(false);
+    });
+  })();
+
+  // Hero image: try first available candidate from data-srcs
+  (function(){
+    var imgEl = document.getElementById('hero-img');
+    if (!imgEl) return;
+
+    // helper to test a candidate URL
+    function testAndSet(url, onSuccess, onFailure){
+      var tester = new Image();
+      tester.onload = function(){
+        onSuccess(url);
+      };
+      tester.onerror = function(){
+        onFailure();
+      };
+      tester.src = url;
+    }
+
+    // if current src already loads, skip trying others
+    var currentSrc = imgEl.getAttribute('src') || '';
+    if (currentSrc) {
+      testAndSet(currentSrc, function(url){
+        imgEl.src = url;
+      }, function(){
+        // current failed -> try candidates
+        tryCandidates();
+      });
+    } else {
+      tryCandidates();
+    }
+
+    function tryCandidates(){
+      var list = (imgEl.getAttribute('data-srcs') || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+      // add fallbacks
+      ['./alrefa.jpg','alrefa.jpg','img/alrefa.jpg','assets/images/alrefa.jpg','assets/img/alrefa.jpg','Prog/img/alrefa.jpg'].forEach(function(p){
+        if (list.indexOf(p) === -1) list.push(p);
+      });
+      // unique
+      list = list.filter(function(item, pos){ return list.indexOf(item) === pos; });
+      var i = 0;
+      function next(){
+        if (i >= list.length) return;
+        var candidate = list[i++];
+        testAndSet(candidate, function(url){
+          imgEl.src = url;
+        }, function(){
+          setTimeout(next, 10);
+        });
+      }
+      next();
+    }
+  })();
+});

@@ -94,6 +94,36 @@ nav.topnav{ display:flex; gap:10px; align-items:center; }
 }
 .nav-link:hover{ background: rgba(9,30,66,0.02); transform: translateY(-3px); }
 
+/* روابط واضحة مع تباعد ومساحة للنص */
+.topnav .nav-item { margin: 0; }
+.topnav .nav-link {
+  display: inline-block;
+  padding: 8px 14px;
+  /* استخدم لون النص الداكن ليظهر فوق خلفية الهيدر الفاتحة */
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 150ms ease, transform 120ms ease, color 120ms;
+  font-size: 0.98rem;
+  white-space: nowrap;
+}
+
+/* تفاعل بصري محسّن — استخدم لون الـaccent بدلاً من جعل النص أبيض */
+.topnav .nav-link:hover,
+.topnav .nav-link:focus {
+  background: rgba(55,91,210,0.06); /* نفس نطاق الألوان المستخدمة في الثيم */
+  color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* رابط نشط أو الصفحة الحالية — إبراز بلون الـaccent مع تباين كافٍ */
+.topnav .nav-link[aria-current="page"] {
+  background: rgba(55,91,210,0.10);
+  color: var(--accent);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
 /* CTA buttons */
 .cta-btn{
   padding:10px 14px;
@@ -322,9 +352,39 @@ input:focus{ box-shadow: 0 8px 24px rgba(55,91,210,0.06); transform: translateY(
 @media (max-width:980px){
   .hero{ grid-template-columns: 1fr; }
   .grid-2{ grid-template-columns: 1fr; }
-  nav.topnav{ display:none; }
+
+  /* اجعل الـ topnav مرئيًا ومناسبًا للمس */
+  nav.topnav{
+    display:flex;                /* عرض الشريط بدل إخفائه */
+    width:100%;
+    gap:8px;
+    align-items:center;
+    flex-wrap:nowrap;           /* نحافظ على سطر واحد وقابل للتمرير */
+    overflow-x:auto;            /* تمرير أفقي عند ضيق المساحة */
+    -webkit-overflow-scrolling:touch;
+    padding:6px 0;
+    scrollbar-width: thin;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  /* تسهيل لمس الروابط: حافظ على البادينغ وجعلها قابلة للتمرير */
+  .topnav .nav-link{
+    padding:10px 14px;
+    font-size:1rem;
+    white-space:nowrap;
+    flex:0 0 auto;              /* لا تنكمش؛ احتفظ بعرض المحتوى */
+  }
+
+  /* ضع زر الـCTA في سطر منفصل عند الحاجة (أعرضه كامل العرض إن كانت المساحة ضيقة) */
   header.site-header{ flex-direction: column; align-items:flex-start; gap:12px; }
-  .cta-btn{ width:100%; display:block; text-align:center; }
+  .topnav .cta-btn{
+    flex:0 0 auto;
+    margin-inline-start: 6px;
+    /* اجعل زر CTA واضحًا لكن لا يأخذ كل العرض تلقائياً
+       (في حال أردت جعله بعرض كامل: uncomment السطر التالي) */
+    /* width:100%; display:block; text-align:center; */
+  }
+
   .container{ padding: 0 14px; }
 }
 
